@@ -18,9 +18,11 @@ This tool is intended to propose a virtual overlay on top of the
 given physical network so that the resultant LFA coverage becomes
 much better than initially or even becomes perfect. For this we 
 present three different strategies:
+
 - greedy heuristic
 - greedy ILP (Integer Linear Program)
 - redundant trees
+
 The first two schemes select the best set of nodes to be virtualized
 in each step, while the third provides perfect LFA coverage in
 one step. If the goal is to simply increase the level of protection
