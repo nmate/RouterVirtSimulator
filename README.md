@@ -31,7 +31,7 @@ formed by redundant trees.
 
 Dependencies
 -------------
-- [LEMON][lemon] v1.3.1
+- LEMON v1.3.1 [http://lemon.cs.elte.hu/trac/lemon]
 - GLPK or GUROBI
 - BOOST (only for testing) /easiest with libboost-all-dev/
 
@@ -65,5 +65,3 @@ Reserved. See the GNU General Public License for more details.
 Author
 --------
 Mate Nagy
-
-[lemon]: : http://lemon.cs.elte.hu/trac/lemon
