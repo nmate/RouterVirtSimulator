@@ -37,14 +37,19 @@ Dependencies
 - GLPK or GUROBI
 - BOOST (only for testing) /easiest with libboost-all-dev/
 
+Please install lemon and place glpk.cc.o under `${LEMON}/lemon`.
+
 Compile
 --------
-Download and compile with:
+Download and compile with GLPK:
 ```sh
-cmake . && make
+cmake -DGUROBI=OFF . && make
 ```
-The executable is generated under `build/src/`. 
-By default GLPK is linked but I will shortly update CMAKE with the flag for GUROBI.
+or with GUROBI:
+```sh
+cmake -DGUROBI=ON . && make
+```
+The executable is generated under `build/src/`.
 
 Test
 -----
