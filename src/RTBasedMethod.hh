@@ -11,7 +11,7 @@
 #define RTBASEDMETHOD_HH_
 
 #include "Network.hh"
-#include "rtmanager.h"
+#include "rtmanager.hh"
 #include "Log.h"
 
 class RTBasedMethod {

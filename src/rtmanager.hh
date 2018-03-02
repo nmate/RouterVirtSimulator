@@ -5,8 +5,8 @@
  * Written by Mate Nagy
  * License: GNU General Public License Version 3
  */
-#ifndef RTMANAGER_H
-#define RTMANAGER_H
+#ifndef RTMANAGER_HH
+#define RTMANAGER_HH
 
 #include <vector>
 #include <stack>
@@ -81,7 +81,6 @@ namespace lemon {
         arcFilterBLUE = new Graph::ArcMap<bool>(*g, false);
 
         edgeConnValue = setEdgeConnectivityValue();
-        checkGraphConnectivity();
       }
 
     /***************************************
@@ -564,17 +563,6 @@ namespace lemon {
       hoTest.run();
 
       return hoTest.minCutValue();
-    }
-
-    /***************************************
-     * Check connectivity
-     * does not work yet, do not know why...
-     ***************************************/
-    void checkGraphConnectivity(){
-      Undirector<const Graph> undirG(*g);
-
-      //biEdgeConn = biEdgeConnected(undirG);
-      //biNodeConn = biNodeConnected(undirG);
     }
 
     /***************************************

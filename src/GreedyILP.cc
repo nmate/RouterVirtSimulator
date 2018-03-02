@@ -578,7 +578,7 @@ NodeSet GreedyILP::selectAndAddVirtualNode() {
    }
   }
 
-  debug(INFO)<<"  Current LFA coverage: "<<nwP->newLfaCoverageMetric_LP(LP)<<endl;
+  debug(INFO)<<"  Current LFA coverage: "<<nwP->newLfaCoverageMetric_LP()<<endl;
 
   /*************************************************
    * Adding the best ILP selected node (if exists) to the
@@ -587,7 +587,7 @@ NodeSet GreedyILP::selectAndAddVirtualNode() {
   NodeSet virtualNodes;
   virtualNodes = realizeVirtualNode(vWinner, xWinner, cWinner);
 
-  debug(INFO)<<"  New LFA coverage: "<<nwP->newLfaCoverageMetric_LP(LP)<<endl;
+  debug(INFO)<<"  New LFA coverage: "<<nwP->newLfaCoverageMetric_LP()<<endl;
   greedyH->printUnprotectedSDSet();
 
   return virtualNodes;
@@ -691,10 +691,10 @@ void GreedyILP::callILPGreedily(const double &ratio, const int &maxNodeSetSize){
   while ( /*(numOfVirtualNodes <= allowedVirtualNodes) &&*/
            !( greedyH->unprotSDs.empty() && nextLFACoverage > currLFACoverage ) )
   {
-    currLFACoverage = nwP->newLfaCoverageMetric_LP(LP);
+    currLFACoverage = nwP->newLfaCoverageMetric_LP();
     addedNodes = selectAndAddVirtualNode();
     if ( !addedNodes.empty() ) numOfVirtualNodes += addedNodes.size();
-    nextLFACoverage = nwP->newLfaCoverageMetric_LP(LP);
+    nextLFACoverage = nwP->newLfaCoverageMetric_LP();
 
     if ( nwP->equal(nextLFACoverage, currLFACoverage) ||
          nextLFACoverage < currLFACoverage ){

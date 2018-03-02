@@ -23,7 +23,7 @@
 #include "../src/Network.hh"
 #include "../src/RTBasedMethod.hh"
 #include "../src/GreedyILP.hh"
-#include "../src/rtmanager.h"
+#include "../src/rtmanager.hh"
 #include "../src/Log.h"
 #include <lemon/arg_parser.h>
 
@@ -327,7 +327,7 @@ BOOST_AUTO_TEST_CASE( tc_02_01_greedy_test_example1 ){
      int numOfVirtualNodes = countNodes(network.g)-network.numOfPhysicalNodes;
      BOOST_CHECK( numOfVirtualNodes == 4 ); //4(0),5(1),6(2),7(3)
 
-     double finalLfaCov = network.newLfaCoverageMetric_LP(LP);
+     double finalLfaCov = network.newLfaCoverageMetric_LP();
      BOOST_CHECK_CLOSE( finalLfaCov, 1, 0.01 );
 }
 
@@ -427,7 +427,6 @@ BOOST_AUTO_TEST_CASE( tc_02_04_one_path_detect_loop_2 ){
   string graph = LGF_PATH + "test_example4_virtual.lgf";
 
   Network network (graph);
-  NodeInfoMap *nodeInfo = network.nodeInfo;
 
   Node s = network.g.nodeFromId(0);
   Node d = network.g.nodeFromId(1);
@@ -461,7 +460,6 @@ BOOST_AUTO_TEST_CASE( tc_02_05_one_valid_path_and_one_loop ){
   string graph = LGF_PATH + "test_example6_virtual.lgf";
 
   Network network (graph);
-  NodeInfoMap *nodeInfo = network.nodeInfo;
 
   Node s = network.g.nodeFromId(0);
   Node d = network.g.nodeFromId(1);
@@ -501,7 +499,6 @@ BOOST_AUTO_TEST_CASE( tc_02_06_no_valid_path_with_LFA ){
   string graph = LGF_PATH + "test_example6_virtual.lgf"; //tobe modified
 
   Network network (graph);
-  NodeInfoMap *nodeInfo = network.nodeInfo;
 
   //---------------------------------------
   // Removing 6->4 and 4->6 arcs, to avoid
@@ -539,7 +536,6 @@ BOOST_AUTO_TEST_CASE( tc_02_07_improved_PT_find_all_next_hops ){
   string graph = LGF_PATH + "packet_trace_tester_1.lgf";
 
   Network network (graph);
-  NodeInfoMap *nodeInfo = network.nodeInfo;
   LinkSet emptyFailLinks;
   NodeVector nHops;
   NodeVector::iterator vIt;
@@ -713,8 +709,6 @@ BOOST_AUTO_TEST_CASE( tc_03_02_trapLeakage ){
   string graph = LGF_PATH + "test_example2.lgf";
 
   Network network (graph);
-  NodeInfoMap *nodeInfo = network.nodeInfo;
-  LinkInfoMap *linkInfo = network.linkInfo;
 
   //do not use all the virtual links
   //(skipEdges, cascade, skipUpstream, smartTrap, nSelStrategy)
@@ -737,8 +731,6 @@ BOOST_AUTO_TEST_CASE( tc_03_03_trapLeakage ){
   string graph = LGF_PATH + "test_example2.lgf";
 
   Network network (graph);
-  NodeInfoMap *nodeInfo = network.nodeInfo;
-  LinkInfoMap *linkInfo = network.linkInfo;
 
   //do not use all the virtual links
   //(skipEdges, cascade, skipUpstream, smartTrap, nSelStrategy)
@@ -839,7 +831,7 @@ BOOST_AUTO_TEST_CASE( tc_03_10_trapLeakage_paper2 ){
 
   network.greedyH->greedyHeuristicAlgorithm(1, NODESET_SIZE);
 
-  double finalLfaCov = network.newLfaCoverageMetric_LP(LP);
+  double finalLfaCov = network.newLfaCoverageMetric_LP();
   int numOfLoops = 0;
 
   BOOST_CHECK( network.checkLoopAndAVPL(numOfLoops) == 0 );
@@ -851,9 +843,6 @@ BOOST_AUTO_TEST_CASE( tc_03_11_smartTrap_paper2 ){
   string graph = LGF_PATH + "paper2.lgf";
 
   Network network (graph);
-  NodeInfoMap *nodeInfo = network.nodeInfo;
-  LinkInfoMap *linkInfo = network.linkInfo;
-
   //(skipEdges, cascade, skipUpstream, smartTrap, nSelStrategy)
   GreedyParamSet gPS = {false, false, true, false, CONN_L};
   network.greedyH->setGreedyParamSet(gPS);
@@ -911,7 +900,6 @@ BOOST_AUTO_TEST_CASE( tc_04_01_greedyFirstStep_L_Set_E_Set ){
   string graph = LGF_PATH + "test_example2.lgf";
   Network network(graph);
 
-  double ratio = 1;
   Node p0 = (network.g).nodeFromId(3);
   NodeSet nSet;
   nSet.insert(p0);
@@ -966,7 +954,6 @@ BOOST_AUTO_TEST_CASE( tc_04_02_twoNodeGreedy_1_2 ){
   string graph = LGF_PATH + "test_example2.lgf";
   Network network(graph);
   Graph *g = &network.g;
-  Network* netwP = &network;
 
   NodeSet nSet;
   Node v1 = (network.g).nodeFromId(1);
@@ -1007,7 +994,6 @@ BOOST_AUTO_TEST_CASE( tc_04_03_twoNodeGreedy_2_3 ){
   string graph = LGF_PATH + "test_example2.lgf";
   Network network(graph);
   Graph *g = &network.g;
-  Network* netwP = &network;
 
   NodeSet nSet;
   Node v3 = (network.g).nodeFromId(3);
@@ -1049,7 +1035,6 @@ BOOST_AUTO_TEST_CASE( tc_04_04_twoNodeGreedy_3_4 ){
   string graph = LGF_PATH + "test_example2.lgf";
   Network network(graph);
   Graph *g = &network.g;
-  Network* netwP = &network;
 
   NodeSet nSet;
   Node v3 = (network.g).nodeFromId(3);
@@ -1097,7 +1082,6 @@ BOOST_AUTO_TEST_CASE( tc_04_05_twoNodeGreedy_4_5 ){
   string graph = LGF_PATH + "test_example2.lgf";
   Network network(graph);
   Graph *g = &network.g;
-  Network* netwP = &network;
 
   NodeSet nSet;
   Node v4 = (network.g).nodeFromId(4);
@@ -1155,7 +1139,6 @@ BOOST_AUTO_TEST_CASE( tc_04_06_twoNodeGreedy_4_0 ){
   string graph = LGF_PATH + "test_example2.lgf";
   Network network(graph);
   Graph *g = &network.g;
-  Network* netwP = &network;
 
   NodeSet nSet;
   Node v4 = (network.g).nodeFromId(4);
@@ -1202,7 +1185,6 @@ BOOST_AUTO_TEST_CASE( tc_04_07_twoNodeGreedy_4_1 ){
   string graph = LGF_PATH + "test_example2.lgf";
   Network network(graph);
   Graph *g = &network.g;
-  Network* netwP = &network;
 
   NodeSet nSet;
   Node v4 = (network.g).nodeFromId(4);
@@ -1251,8 +1233,6 @@ BOOST_AUTO_TEST_CASE( tc_04_07_twoNodeGreedy_4_1 ){
 BOOST_AUTO_TEST_CASE( tc_04_08a_twoNodeGreedy_checkUniformSets ){
   string graph = LGF_PATH + "test_example1.lgf";
   Network network(graph);
-  Graph *g = &network.g;
-  Network* netwP = &network;
 
   network.buildUniformSetOfNodes(1);
   //network.printVirtCandidateNodeSets();
@@ -1278,8 +1258,6 @@ BOOST_AUTO_TEST_CASE( tc_04_08a_twoNodeGreedy_checkUniformSets ){
 BOOST_AUTO_TEST_CASE( tc_04_08b_twoNodeGreedy_checkUniformSets ){
   string graph = LGF_PATH + "test_example2.lgf";
   Network network(graph);
-  Graph *g = &network.g;
-  Network* netwP = &network;
 
   network.buildUniformSetOfNodes(1);
   //network.printVirtCandidateNodeSets();
@@ -1305,8 +1283,6 @@ BOOST_AUTO_TEST_CASE( tc_04_08b_twoNodeGreedy_checkUniformSets ){
 BOOST_AUTO_TEST_CASE( tc_04_08c_twoNodeGreedy_checkUniformSets ){
   string graph = LGF_PATH + "six_cyc.lgf";
   Network network(graph);
-  Graph *g = &network.g;
-  Network* netwP = &network;
 
   network.buildUniformSetOfNodes(1);
   //network.printVirtCandidateNodeSets();
@@ -1332,7 +1308,6 @@ BOOST_AUTO_TEST_CASE( tc_04_08c_twoNodeGreedy_checkUniformSets ){
 BOOST_AUTO_TEST_CASE( tc_04_11_twoNodeGreedy_solves_counter_example ){
   string graph = LGF_PATH + "counter_example.lgf";
   Network network(graph);
-  Graph *g = &network.g;
   Network* netwP = &network;
   int ratio = 1;
 
@@ -1341,7 +1316,7 @@ BOOST_AUTO_TEST_CASE( tc_04_11_twoNodeGreedy_solves_counter_example ){
   network.greedyH->setGreedyParamSet(gPS);
   network.greedyH->greedyHeuristicAlgorithm(ratio, NODESET_SIZE);
 
-  double finalLfaCov = network.newLfaCoverageMetric_LP(LP);
+  double finalLfaCov = network.newLfaCoverageMetric_LP();
 
   BOOST_CHECK(countNodes(netwP->g)-netwP->numOfPhysicalNodes == 2);
 
@@ -1368,7 +1343,6 @@ BOOST_AUTO_TEST_CASE( tc_04_11_twoNodeGreedy_solves_counter_example ){
 BOOST_AUTO_TEST_CASE( tc_04_11a_s_is_no_virt_when_2_paralel_v ){
   string graph = LGF_PATH + "test_example1.lgf";
   Network network(graph);
-  Graph *g = &network.g;
 
   NodeSet nSet;
   Node toV3 = (network.g).nodeFromId(3);
@@ -1387,7 +1361,7 @@ BOOST_AUTO_TEST_CASE( tc_04_11a_s_is_no_virt_when_2_paralel_v ){
   for (lIt=(network.greedyH)->L.begin(); lIt != (network.greedyH)->L.end(); ++lIt){
     if ( (network.g).id(lIt->source) == 0 ||
          (network.g).id(lIt->source) == 3 )
-      sourceIsVirtualized == true;
+      sourceIsVirtualized = true;
   }
 
   BOOST_CHECK( sourceIsVirtualized == 0 );
@@ -1405,7 +1379,6 @@ BOOST_AUTO_TEST_CASE( tc_04_11a_s_is_no_virt_when_2_paralel_v ){
 BOOST_AUTO_TEST_CASE( tc_04_11b_s_is_no_virt_when_2_paralel_v ){
   string graph = LGF_PATH + "test_example1.lgf";
   Network network(graph);
-  Graph *g = &network.g;
 
   NodeSet nSet;
   Node toV3 = (network.g).nodeFromId(3);
@@ -1431,7 +1404,6 @@ BOOST_AUTO_TEST_CASE( tc_04_11b_s_is_no_virt_when_2_paralel_v ){
 BOOST_AUTO_TEST_CASE( tc_04_12_make_tunnel_with_skipEdge ){
   string graph = LGF_PATH + "test_tunnel_limit.lgf";
   Network network(graph);
-  Graph *g = &network.g;
 
   NodeSet nSet;
   Node toV1 = (network.g).nodeFromId(1);
@@ -1455,7 +1427,6 @@ BOOST_AUTO_TEST_CASE( tc_04_12_make_tunnel_with_skipEdge ){
 BOOST_AUTO_TEST_CASE( tc_04_13_check_buildPathSetOfNodes ){
   string graph = LGF_PATH + "test_example2.lgf";
   Network network(graph);
-  Graph *g = &network.g;
 
   //(skipEdges, cascade, skipUpstream, smartTrap, nSelStrategy)
   GreedyParamSet gPS = {false, false, true, false, SPS};
@@ -1480,7 +1451,6 @@ BOOST_AUTO_TEST_CASE( tc_04_13_check_buildPathSetOfNodes ){
 BOOST_AUTO_TEST_CASE( tc_04_14_check_buildPathSetOfNodes ){
   string graph = LGF_PATH + "test_example1.lgf";
   Network network(graph);
-  Graph *g = &network.g;
 
   //(skipEdges, cascade, skipUpstream, smartTrap, nSelStrategy)
   GreedyParamSet gPS = {false, false, true, false, SPS};
@@ -1505,7 +1475,6 @@ BOOST_AUTO_TEST_CASE( tc_04_14_check_buildPathSetOfNodes ){
 BOOST_AUTO_TEST_CASE( tc_04_15_check_SPTBased_Virt ){
   string graph = LGF_PATH + "test_example2.lgf";
   Network network(graph);
-  Graph *g = &network.g;
 
   //(skipEdges, cascade, skipUpstream, smartTrap, nSelStrategy)
   GreedyParamSet gPS = {false, false, true, true, SPS};
@@ -1529,7 +1498,6 @@ BOOST_AUTO_TEST_CASE( tc_04_15_check_SPTBased_Virt ){
 BOOST_AUTO_TEST_CASE( tc_04_16_check_SPTBased_Virt ){
   string graph = LGF_PATH + "counter_example.lgf";
   Network network(graph);
-  Graph *g = &network.g;
 
   //(skipEdges, cascade, skipUpstream, smartTrap, nSelStrategy)
   GreedyParamSet gPS = {false, false, true, true, SPS};
@@ -1583,14 +1551,13 @@ BOOST_AUTO_TEST_CASE( tc_04_17_check_fillLocalSRLGs ){
 BOOST_AUTO_TEST_CASE( tc_04_18_classic_heu_cycle_reach_1 ){
   string graph = LGF_PATH + "six_cyc.lgf";
   Network network(graph);
-  Graph *g = &network.g;
 
   //(skipEdges, cascade, skipUpstream, smartTrap, nSelStrategy)
   GreedyParamSet gPS = {false, false, true, true, CONN_L};
   network.greedyH->setGreedyParamSet(gPS);
 
   network.greedyH->greedyHeuristicAlgorithm(2, NODESET_SIZE);
-  double finalLfaCov = network.newLfaCoverageMetric_LP(LP);
+  double finalLfaCov = network.newLfaCoverageMetric_LP();
   bool perfCoverage = network.equal(finalLfaCov, 1);
   bool emptyUnprotSet = network.greedyH->unprotSDs.empty();
 
@@ -1938,7 +1905,6 @@ BOOST_AUTO_TEST_CASE( tc_06_01_DepthFirstSearch ){
   string graph = LGF_PATH + "test_example2.lgf";
   Network network(graph);
   Graph *g = &network.g;
-  Network* netwP = &network;
 
   Node root = (network.g).nodeFromId(4);
   RedundantTree<Graph> rtManager(g);

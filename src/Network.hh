@@ -38,13 +38,15 @@ typedef enum {LP, NP} LFAType;
 // Virtual layer identifiers:
 // RR  = Remote RED      ; RB  = Remote BLUE
 // VRR = Very Remote RED ; VRB = Very Remote BLUE
-typedef int LayerID;
-const int NON  = -1;
-const int PHYS =  0;
-const int RR   =  1;
-const int RB   =  2;
-const int VRR  =  3;
-const int VRB  =  4;
+
+typedef enum {
+  NON,
+  PHYS = 0,
+  RR,
+  RB,
+  VRR,
+  VRB
+} LayerID;
 
 struct NodeInfo {
   bool isVirtual;
@@ -118,7 +120,7 @@ public:
   Node isLegacyLFAProtected_LP(const Node&, const Node&, const LinkSet& = LinkSet()) const;
   bool isLegacyLFAProtected_NP(const Node&, const Node&);
   void countPhysicalElements();
-  double newLfaCoverageMetric_LP(const LFAType &covType);
+  double newLfaCoverageMetric_LP();
   double legacyLFACoverage(const LFAType &);
   bool isLocalSRLGDisjoint(const Node&, const Arc&, const Arc&);
   int addVirtualRouter(const Node&);

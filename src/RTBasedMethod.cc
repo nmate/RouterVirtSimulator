@@ -308,8 +308,8 @@ void RTBasedMethod::fillLocalSRLGs(){
 
     for (it=nhToDestMap.begin(); it!=nhToDestMap.end();++it){
       // check all the layers
-      for (LayerID lId = RR; lId <= VRB; ++lId){
-        validLFA = srlg_IsLayerValidForLFA(s, it->first, it->second, lId);
+      for (int lId = RR; lId <= VRB; ++lId){
+        validLFA = srlg_IsLayerValidForLFA(s, it->first, it->second, (LayerID)lId);
         if ( validLFA != INVALID ){
           break;
         }
@@ -330,8 +330,8 @@ void RTBasedMethod::fillLocalSRLGs(){
         Arc revNhArc = findArc(*g, it->first, s);
         linkSet.insert(revNhArc);
 
-        for (LayerID lId = RR; lId <= VRB; lId++){
-          Node virtNeigh = isVirtualNodeExistInLayer(s, lId);
+        for (int lId = RR; lId <= VRB; lId++){
+          Node virtNeigh = isVirtualNodeExistInLayer(s, (LayerID)lId);
           if ( virtNeigh != validLFA ){
             linkSet.insert(findArc(*g, s, virtNeigh));
             linkSet.insert(findArc(*g, virtNeigh, s));

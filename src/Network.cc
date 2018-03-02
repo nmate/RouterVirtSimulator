@@ -346,7 +346,7 @@ void Network::countPhysicalElements(){
  * difference is the packet-tracer check test
  * Should be extended with NP case measuring later...
  */
-double Network::newLfaCoverageMetric_LP(const LFAType &covType){
+double Network::newLfaCoverageMetric_LP(){
   int N = numOfPhysicalNodes;
   int I = -1;
   int summa = 0;

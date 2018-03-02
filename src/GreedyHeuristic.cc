@@ -59,7 +59,7 @@ void GreedyHeuristic::buildUnprotectedSDSet(){
   // the LFA coverage MUST be 1!
   if ( unprotSDs.empty() ){
     toDebug = 1;
-    double finalCov = nwP->newLfaCoverageMetric_LP(LP);
+    double finalCov = nwP->newLfaCoverageMetric_LP();
     if ( nwP->equal(finalCov, 1) == false)
       cout<<"ERROR: S-D set is empty but LFA coverage != 1 ! ! !"<<endl;
   }
@@ -673,7 +673,7 @@ double GreedyHeuristic::rollbackVirtualNode(const NodeSet& virtS){
     fillNodeInfoLocalSrgTables();
     buildUnprotectedSDSet();
   }
-  return nwP->newLfaCoverageMetric_LP(LP);
+  return nwP->newLfaCoverageMetric_LP();
 }
 
 /***************************************
@@ -841,12 +841,12 @@ void GreedyHeuristic::greedyHeuristicAlgorithm(const double &ratio, const int &m
 
       }
       else {
-        currLFACoverage = nwP->newLfaCoverageMetric_LP(LP);
+        currLFACoverage = nwP->newLfaCoverageMetric_LP();
 
         NodeSet virtS = realizeVirtualNode(ToVirtualizeS, toBeEscape);
         numOfVirtualNodes += virtS.size();
 
-        nextLFACoverage = nwP->newLfaCoverageMetric_LP(LP);
+        nextLFACoverage = nwP->newLfaCoverageMetric_LP();
 
         if ( nwP->equal(nextLFACoverage, currLFACoverage) ||
              nextLFACoverage < currLFACoverage                          ){

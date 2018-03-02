@@ -89,9 +89,8 @@ string int2str(const int& number){
   return convert.str();
 }
 
-void writeToXml(const int &numOfVirtualNodes, double initialLfaCoverage,
-                double finalLfaCoverage, string inputFile,
-                int inputRatio, const double &ratio,
+void writeToXml(double initialLfaCoverage, double finalLfaCoverage, 
+                string inputFile, int inputRatio, const double &ratio,
                 const Network &network, const int &mode, const XmlStepSet &xSS,
                 const bool &isSPTBasedHeu){
   /*
@@ -279,7 +278,7 @@ int main(int argc, char **argv){
   Network network(inputFile);
 
   // Calculate initial LFA coverage
-  double initialLfaCoverage = network.newLfaCoverageMetric_LP(LP);
+  double initialLfaCoverage = network.newLfaCoverageMetric_LP();
 
   /*
    * Transform ratio of virtual nodes like this:
@@ -362,7 +361,7 @@ int main(int argc, char **argv){
       callPostFinishCheck(network, inputFile, ratio);
 
       // Recalculate final LFA coverage
-      double finalLfaCoverage = network.newLfaCoverageMetric_LP(LP);
+      double finalLfaCoverage = network.newLfaCoverageMetric_LP();
 
       debug(INFO)<<"==================================="<<endl;
       debug(INFO)<<" Final LP LFA coverage: "<<finalLfaCoverage<<endl;
@@ -373,8 +372,8 @@ int main(int argc, char **argv){
       debug(INFO)<<" # PT calls (trap): "<<network.greedyH->getPTCounter_Trap()<<endl;
 
       if (ap.given("xml")){
-        writeToXml(numOfVirtualNodes, initialLfaCoverage, finalLfaCoverage, inputFile,
-                   inputRatio, ratio, network, mode, network.greedyH->xmlStepSet, gPS.nSelStrategy);
+        writeToXml(initialLfaCoverage, finalLfaCoverage, inputFile,inputRatio, 
+                   ratio, network, mode, network.greedyH->xmlStepSet, gPS.nSelStrategy);
       }
 
       //network.printGraph();
@@ -401,7 +400,7 @@ int main(int argc, char **argv){
       debug(INFO)<<"==================================="<<endl;
 
       // check LFA coverage and loop:
-      double finalLfaCoverage = netwP->newLfaCoverageMetric_LP(LP);
+      double finalLfaCoverage = netwP->newLfaCoverageMetric_LP();
       debug(INFO)<<" Final LP LFA coverage: "<<finalLfaCoverage<<endl;
 
       //Debug
@@ -426,7 +425,7 @@ int main(int argc, char **argv){
 
       XmlStepSet dummyXSS;
       if (ap.given("xml")){
-        writeToXml(numOfVirtualNodes, initialLfaCoverage, finalLfaCoverage, inputFile,
+        writeToXml(initialLfaCoverage, finalLfaCoverage, inputFile,
                    inputRatio, ratio, network, mode, dummyXSS, false);
       }
       network.writeGraph();
@@ -464,7 +463,7 @@ int main(int argc, char **argv){
 
       debug(INFO)<<"==================================="<<endl;
 
-      double finalCoverage = network.newLfaCoverageMetric_LP(LP);
+      double finalCoverage = network.newLfaCoverageMetric_LP();
       cout<<"Final LP LFA coverage: "<<finalCoverage<<endl;
 
       int numOfVirtualNodes = countNodes(network.g)-network.numOfPhysicalNodes;
@@ -473,8 +472,8 @@ int main(int argc, char **argv){
       debug(INFO)<<" # PT calls (trap): "<<network.greedyH->getPTCounter_Trap()<<endl;
 
       if (ap.given("xml")){
-        writeToXml(numOfVirtualNodes, initialLfaCoverage, finalCoverage, inputFile,
-                   inputRatio, ratio, network, mode, greedyILP.xmlStepSet, gPS.nSelStrategy);
+        writeToXml(initialLfaCoverage, finalCoverage, inputFile,inputRatio, ratio, 
+                   network, mode, greedyILP.xmlStepSet, gPS.nSelStrategy);
       }
 
       //network.printGraph();

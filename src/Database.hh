@@ -24,21 +24,19 @@ class Network;
 class Database {
 
 public:
-	const Network *nwP;
-	DistMap *distmap;
-	NHMap *nhmap;
+  const Network *nwP;
+  DistMap *distmap;
+  NHMap *nhmap;
 
-	//for unicost version of graph
-	DistMap *uniDistMap;
-	NHMap *uniNHMap;
+  //for unicost version of graph
+  DistMap *uniDistMap;
+  NHMap *uniNHMap;
 
 public:
-	Database(Network*);
-	void initializeDB();
-	void buildUniCostDB();
-	~Database();
+  Database(Network*);
+  void initializeDB();
+  void buildUniCostDB();
+  ~Database();
 };
-
-
 
 #endif /* DATABASE_HH_ */
