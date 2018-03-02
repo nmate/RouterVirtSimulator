@@ -18,9 +18,11 @@ This tool is intended to propose a virtual overlay on top of the
 given physical network so that the resultant LFA coverage becomes
 much better than initially or even becomes perfect. For this we 
 present three different strategies:
+
 - greedy heuristic
 - greedy ILP (Integer Linear Program)
 - redundant trees
+
 The first two schemes select the best set of nodes to be virtualized
 in each step, while the third provides perfect LFA coverage in
 one step. If the goal is to simply increase the level of protection
@@ -31,18 +33,23 @@ formed by redundant trees.
 
 Dependencies
 -------------
-- [LEMON][lemon] v1.3.1
+- LEMON v1.3.1 [http://lemon.cs.elte.hu/trac/lemon]
 - GLPK or GUROBI
 - BOOST (only for testing) /easiest with libboost-all-dev/
 
+Please install lemon and place glpk.cc.o under `${LEMON}/lemon`.
+
 Compile
 --------
-Download and compile with:
+Download and compile with GLPK:
 ```sh
-cmake . && make
+cmake -DGUROBI=OFF . && make
 ```
-The executable is generated under `build/src/`. 
-By default GLPK is linked but I will shortly update CMAKE with the flag for GUROBI.
+or with GUROBI:
+```sh
+cmake -DGUROBI=ON . && make
+```
+The executable is generated under `build/src/`.
 
 Test
 -----
@@ -65,5 +72,3 @@ Reserved. See the GNU General Public License for more details.
 Author
 --------
 Mate Nagy
-
-[lemon]: : http://lemon.cs.elte.hu/trac/lemon

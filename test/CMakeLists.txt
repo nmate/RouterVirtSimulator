@@ -1,5 +1,11 @@
 include_directories($ENV{HOME}/lemon-1.3.1)
 
+if (GUROBI)
+  add_definitions(-DGUROBI)
+  include_directories($ENV{HOME}/gurobi702/linux64/include)
+endif()
+
+
 add_executable(routerVirtSimTest
  UnitTest.cc
  ../src/Network.cc
@@ -17,7 +23,12 @@ target_link_libraries(routerVirtSimTest
 )
 
 if (GUROBI)
-
+  target_link_libraries(routerVirtSimTest
+  $ENV{HOME}/lemon-1.3.1/lemon/gurobi.o
+  -L$ENV{HOME}/gurobi702/linux64/lib
+  -lgurobi_c++
+  -lgurobi70
+  )
 else()
  target_link_libraries(routerVirtSimTest
  $ENV{HOME}/lemon-1.3.1/lemon/glpk.o
