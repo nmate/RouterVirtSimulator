@@ -51,6 +51,12 @@ cmake -DGUROBI=ON . && make
 ```
 The executable is generated under `build/src/`.
 
+For viewing the debug output, compile with:
+```sh
+cmake -DDEBUG_LOG=ON . && make
+```
+otherwise the "-v" switch is useless.
+
 Test
 -----
 Compile with:
